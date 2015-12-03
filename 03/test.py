@@ -1,4 +1,11 @@
-from problem_1 import number_of_houses_delivered_to
+from santa import Santa
+
+
+def number_of_houses_delivered_to(instructions):
+    santa = Santa()
+    for step in instructions:
+        santa.move(step)
+    return santa.first_deliveries
 
 
 def test_case_1():
