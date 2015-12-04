@@ -4,13 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"io"
-	"log"
 	"os"
 )
 
 func main() {
-
-	floor := 0
 
 	fi, err := os.Open("input.txt")
 	if err != nil {
@@ -22,23 +19,20 @@ func main() {
 		}
 	}()
 
+	s := santa{floor: 0}
 	r := bufio.NewReader(fi)
 	for {
 		if c, _, err := r.ReadRune(); err != nil {
 			if err == io.EOF {
 				break
 			} else {
-				log.Fatal(err)
+				panic(err)
 			}
 		} else {
-			if c == '(' {
-				floor++
-			} else if c == ')' {
-				floor--
-			}
+			s.move(c)
 		}
 	}
 
-	fmt.Printf("Floor: %d\n", floor)
+	fmt.Printf("Floor: %d\n", s.floor)
 
 }
