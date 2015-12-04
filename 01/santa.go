@@ -4,6 +4,7 @@ import "fmt"
 
 type santa struct {
 	floor int
+	moves int
 }
 
 func (s *santa) move(c rune) {
@@ -14,4 +15,5 @@ func (s *santa) move(c rune) {
 	} else {
 		panic(fmt.Sprintf("Invalid Rune: %c", c))
 	}
+	s.moves++
 }
