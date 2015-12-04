@@ -19,7 +19,7 @@ func main() {
 		}
 	}()
 
-	s := santa{floor: 0}
+	s := santa{}
 	r := bufio.NewReader(fi)
 	for {
 		if c, _, err := r.ReadRune(); err != nil {

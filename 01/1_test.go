@@ -9,7 +9,7 @@ import (
 func CheckFloorForString(t *testing.T, s string, expected int) {
 	t.Logf("Expecting %s to result in floor %d.", s, expected)
 	r := strings.NewReader(s)
-	snta := santa{floor: 0}
+	snta := santa{}
 	for {
 		if c, _, err := r.ReadRune(); err != nil {
 			if err == io.EOF {
