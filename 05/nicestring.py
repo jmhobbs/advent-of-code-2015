@@ -15,9 +15,18 @@ def has_vowels(string, number=3):
 
 def has_double(string):
     # It contains at least one letter that appears twice in a row, like xx, abcdde (dd), or aabbccdd (aa, bb, cc, or dd).
-    raise NotImplementedError()
+    c = None
+    for ch in string:
+        if c == ch:
+            return True
+        else:
+            c = ch
+    return False
 
 
 def has_no_naughty(string):
     # It does not contain the strings ab, cd, pq, or xy, even if they are part of one of the other requirements.
-    raise NotImplementedError()
+    for naughty in NAUGHTY_SEQUENCES:
+        if naughty in string:
+            return False
+    return True
