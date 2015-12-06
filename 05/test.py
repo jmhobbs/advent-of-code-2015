@@ -1,4 +1,5 @@
 from nicestring import has_vowels, has_double, has_no_naughty, is_nice
+import newnicestring
 
 
 def test_has_vowels():
@@ -49,3 +50,46 @@ def test_naughty():
     assert False == is_nice("jchzalrnumimnmhp")
     assert False == is_nice("haegwjzuvuyypxyu")
     assert False == is_nice("dvszwmarrgswjxmb")
+
+
+def test_non_overlapping_doubles():
+    # It contains a pair of any two letters that appears at least twice in the
+    # string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like
+    # aaa (aa, but it overlaps).
+    assert True == newnicestring.has_non_overlapping_doubles("xyxy")
+    assert True == newnicestring.has_non_overlapping_doubles("ddbcddefgh")
+
+
+def test_overlapping_doubles():
+    # It contains a pair of any two letters that appears at least twice in the
+    # string without overlapping, like xyxy (xy) or aabcdefgaa (aa), but not like
+    # aaa (aa, but it overlaps).
+    assert False == newnicestring.has_non_overlapping_doubles("aaa")
+    assert False == newnicestring.has_non_overlapping_doubles("bbbcdefgh")
+
+
+def test_spaced_repeat():
+    # It contains at least one letter which repeats with exactly one letter
+    # between them, like xyx, abcdefeghi (efe), or even aaa.
+    assert True == newnicestring.has_spaced_repeat("xyx")
+    assert True == newnicestring.has_spaced_repeat("abcdefeghi")
+    assert True == newnicestring.has_spaced_repeat("aaa")
+    assert True == newnicestring.has_spaced_repeat("bcdefgf")
+
+
+def test_no_spaced_repeat():
+    assert False == newnicestring.has_spaced_repeat("abcdefggh")
+
+
+def test_new_nice():
+    # qjhvhtzxzqqjkmpb is nice because is has a pair that appears twice (qj) and a letter that repeats with exactly one letter between them (zxz).
+    assert True == newnicestring.is_nice("qjhvhtzxzqqjkmpb")
+    # xxyxx is nice because it has a pair that appears twice and a letter that repeats with one between, even though the letters used by each rule overlap.
+    assert True == newnicestring.is_nice("xxyxx")
+
+
+def test_new_naughty():
+    # uurcxstgmygtbstg is naughty because it has a pair (tg) but no repeat with a single letter between them.
+    assert False == newnicestring.is_nice("uurcxstgmygtbstg")
+    # ieodomkazucvgmuy is naughty because it has a repeating letter with one between (odo), but no pair that appears twice.
+    assert False == newnicestring.is_nice("ieodomkazucvgmuy")
