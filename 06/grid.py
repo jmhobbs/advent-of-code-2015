@@ -55,3 +55,27 @@ class LightGrid (object):
         for y in xrange(0, self.height):
             rows.append(u''.join(map(lambda v: on if v else off, self.grid[y])))
         return u"\n".join(rows)
+
+
+class VariableBrightnessLightGrid (LightGrid):
+
+    def turn_on(self, x1, y1, x2, y2):
+        for y in xrange(y1, y2+1):
+            for x in xrange(x1, x2+1):
+                self.grid[y][x] += 1
+
+    def turn_off(self, x1, y1, x2, y2):
+        for y in xrange(y1, y2+1):
+            for x in xrange(x1, x2+1):
+                self.grid[y][x] = max(0, self.grid[y][x] - 1)
+
+    def toggle(self, x1, y1, x2, y2):
+        for y in xrange(y1, y2+1):
+            for x in xrange(x1, x2+1):
+                self.grid[y][x] += 2
+
+    def grid_to_string(self):
+        rows = []
+        for y in xrange(0, self.height):
+            rows.append(u''.join(map(lambda v: "[%d]" % v if v else "[ ]", self.grid[y])))
+        return u"\n".join(rows)
