@@ -1,5 +1,3 @@
-import base64
-
 
 class EscapedString (object):
 
@@ -29,6 +27,9 @@ class EscapedString (object):
                         real.append(c)
                         escape_sequence = None
         return ''.join(real)
+
+    def escape(self):
+        return '"%s"' % self.string.replace("\\", "\\\\").replace('"', '\\"')
 
     @property
     def string_length(self):
