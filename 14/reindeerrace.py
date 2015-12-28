@@ -30,9 +30,24 @@ class ReindeerRace (object):
         self.racers[mo.group(1)] = Reindeer(int(mo.group(2)), int(mo.group(3)), int(mo.group(4)))
 
     def race(self, seconds):
-        leader = (None, 0)
+        leader = []
+        leader_distance = 0
         for name in self.racers:
             distance = self.racers[name].race(seconds)
-            if distance > leader[1]:
-                leader = (name, distance)
-        return leader
+            if distance > leader_distance:
+                leader = [name]
+                leader_distance = distance
+            elif distance == leader_distance:
+                leader.append(name)
+        return (leader, leader_distance)
+
+    def race_new_scoring(self, seconds):
+        points = {}
+        for name in self.racers:
+            points[name] = 0
+        for second in xrange(1, seconds + 1):
+            result = self.race(second)
+            for name in result[0]:
+                points[name] += 1
+        return sorted(zip(*zip(*points.items())), key=lambda r: r[1], reverse=True)
+
